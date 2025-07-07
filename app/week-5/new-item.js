@@ -17,7 +17,7 @@ export default function NewItem() {
   };
 
   const increment = () => {
-    if (quantity < 99) setQuantity(quantity + 1);
+    if (quantity < 12) setQuantity(quantity + 1);
   };
 
   const decrement = () => {

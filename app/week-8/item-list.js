@@ -3,7 +3,7 @@ import { useState } from "react";
 import Item from "./item";
 
 
-export default function ItemList({ items }) {
+export default function ItemList({ items, onItemSelect }) {
 
   const [sortBy, setSortBy] = useState("name");
 
@@ -40,6 +40,7 @@ export default function ItemList({ items }) {
           iName={item.name}
           iQuantity={item.quantity}
           iCategory={item.category}
+          onSelect={onItemSelect} 
         />
       ))}
     </div>

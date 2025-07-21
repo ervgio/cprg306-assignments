@@ -1,69 +1,102 @@
 "use client";
+
 import { useState } from "react";
 
-export default function NewItem() {
+export default function NewItem({ onAddItem }) {
   const [name, setName] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [category, setCategory] = useState("produce");
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const item = { name, quantity, category };
-    console.log(item);
-    alert(`Item added:Name: ${name} Quantity: ${quantity}Category: ${category}`);
+
+    const item = {
+      id: Math.random().toString(36).substring(2, 9),
+      name: name,
+      quantity: quantity,
+      category: category,
+    };
+
+    onAddItem(item);
+
     setName("");
     setQuantity(1);
     setCategory("produce");
   };
 
   const increment = () => {
-    if (quantity < 12) setQuantity(quantity + 1);
+    if (quantity < 20) {
+      setQuantity(quantity + 1);
+    }
   };
 
   const decrement = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const handleCategoryChange = (event) => {
+    console.dir(event.target.value);
+    setCategory(event.target.value);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-blue-200 p-6 max-w-sm mx-auto rounded-xl shadow-lg space-y-4"
+      className="flex flex-col gap-4 p-6 bg-red-400 shadow rounded-4xl w-100  text-black"
     >
-      <input
-        type="text"
-        placeholder="Item name"
-        value={name}
-        required
-        onChange={(e) => setName(e.target.value)}
-        className="w-full p-3 rounded-xl border bg-white text-black placeholder-gray-400"
-      />
+      <h2 className="text-xl font-bold text-center">Add New Item</h2>
 
+      <div>
+        <label className="block font-semibold">Item Name:</label>
+        <input
+          required
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full p-2 border rounded"
+          placeholder="e.g., Milk"
+        />
+      </div>
 
-      <div className="flex justify-between gap-10 text-black " >
-    
-        <div className=" bg-white rounded-xl px-4 py-2 space-x-2">
-          <span className="text-lg font-medium">{quantity}</span>
+      <div>
+        <label className="block font-semibold">Quantity:</label>
+        <div className="flex gap-2 items-center">
           <button
             type="button"
             onClick={decrement}
-            className="bg-gray-300 text-white px-3 py-1 rounded-full text-lg shadow"
+            disabled={quantity == 1}
+            className={`px-3 py-1 rounded bg-gray-400 text-black ${
+              quantity == 1
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-white"
+            }`}
           >
             -
           </button>
+          <span>{quantity}</span>
           <button
             type="button"
             onClick={increment}
-            className="bg-blue-500 text-white px-3 py-1 rounded-full text-lg shadow"
+            disabled={quantity === 20}
+            className={`px-3 py-1 rounded bg-blue-500 text-white ${
+              quantity === 20
+                ? "opacity-50 cursor-not-allowed"
+                : "hover:bg-blue-300"
+            }`}
           >
             +
           </button>
         </div>
+      </div>
 
-   
+      <div>
+        <label className="block font-semibold">Category:</label>
         <select
           value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="flex-1 bg-white text-black p-2 rounded-xl border border-gray-300 shadow-md"
+          onChange={handleCategoryChange}
+          className="w-full p-2 border rounded"
         >
           <option value="produce">Produce</option>
           <option value="dairy">Dairy</option>
@@ -79,13 +112,12 @@ export default function NewItem() {
         </select>
       </div>
 
- 
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white text-xl rounded-xl py-3 hover:bg-blue-600"
+        className="bg-blue-500 hover:bg-blue-400 text-black font-semibold px-4 py-2 rounded"
       >
-        +
+        Submit
       </button>
     </form>
   );
-}
+};

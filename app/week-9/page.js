@@ -4,9 +4,11 @@ import Link from "next/link";
 import { useUserAuth } from "./_utils/auth-context"
 
 
+
 export default function SignInPage(){
 
 
+    
     const {user, gitHubSignIn, firebaseSignOut} = useUserAuth();
 
     async function HandleSignIn () {
@@ -42,9 +44,6 @@ export default function SignInPage(){
                         <img className="w-30 h-30" src={user.photoURL}></img>
                     </div>
                     <div>
-                        <Link href={"/.week-9/protected"}></Link>
-                    </div>
-                    <div>
                         <button
                         className="text-lg bg-blue-600 text-white rounded-2xl px-2 py-1 mt-4"
                         onClick={HandleSignOut}
@@ -52,6 +51,8 @@ export default function SignInPage(){
                         Sign out
                         </button>
                     </div>
+
+                    <Link  href={"/week-9/shopping-list"}>Continue to Shopping List </Link>
 
                 </section>
 
@@ -65,6 +66,8 @@ export default function SignInPage(){
 
             )
             }
+
         </main>
+
     )
 };
